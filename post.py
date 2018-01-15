@@ -5,6 +5,13 @@ class Post:
     user = None
     domain = None
 
+    def build(self, post):
+        self.title = post.title.lower()
+        self.score = post.score
+        self.domain = post.domain.lower()
+        self.date = post.created
+        self.user = post.author.name
+
     def setTitle(self, title):
         self.title = title
 
