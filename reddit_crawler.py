@@ -4,9 +4,20 @@ from input import Input
 import sys
 import praw
 import pprint
+import operator
 
 filter = ["the",
+          "him",
+          "will",
+          "in",
           "of",
+          "on",
+          "is",
+          "says",
+          "about",
+          "that",
+          "who",
+          "at",
           "not",
           "as",
           "and",
@@ -73,13 +84,16 @@ for post in reddit.subreddit('politics').submissions(1515888000,1515987464):
 print str(count) + " posts loaded.... beginning analytics..."
 persondict = {}
 
-def decomposeTitle(dict, post, filter=None, keywords=None):
+def decomposeTitle(person, dict, post, filter=None, keywords=None):
     for word in post.title.split():
         #if we are using a stop word filter, apply it
         if filter and word in filter:
             continue
         #if we are using a keyword fiter, apply it
         if keywords and not word in keywords:
+            continue
+        #ignore the persons name
+        if person in word:
             continue
         #either add or not to dictionary
         if word in dict:
@@ -92,7 +106,7 @@ def searchPostsForPerson(person, filter=None, keywords=None):
     dict = {}
     for post in posts:
         if person in post.title:
-            decomposeTitle(dict, post, filter, keywords)
+            decomposeTitle(person, dict, post, filter, keywords)
     persondict[person]= dict
 
 
@@ -112,6 +126,7 @@ for person in persons:
 for person in persons:
     print("------" + person + "------")
     personwords = persondict[person]
-    sortedWords = personwords.keys()
+    sortedWords = sorted(personwords.items(),reverse=True, key=operator.itemgetter(1))
     for word in sortedWords:
-        print(word + ": " + str(personwords[word]))
+        print(word[0] + ": " + str(word[1]))
+    print("\n\n\n")
