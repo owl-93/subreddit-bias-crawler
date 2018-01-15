@@ -1,5 +1,6 @@
 trump
 obama
+clinton
 
 slams
 worst
@@ -12,5 +13,6 @@ supremacist
 horrible
 unqualified
 nazi
+privilege
 
 

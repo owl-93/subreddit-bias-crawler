@@ -71,7 +71,7 @@ print(keywords)
 print "live reddit instance:" + str(reddit.read_only)
 print "subreddit: " + str(subreddit.title)
 count = 0
-for post in reddit.subreddit('politics').submissions(1515888000,1515987464):
+for post in reddit.subreddit('politics').submissions(1515715200,1515995502):
     count += 1
     p = Post()
     p.build(post)
